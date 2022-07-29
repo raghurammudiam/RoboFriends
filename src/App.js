@@ -1,25 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import CardList from "./CardList";
+import {robots} from './robots'
+import Search from "./Search";
+import 'tachyons'
+
+const App = () => {
+    const [searchText, setSearchText] = useState("");
+    
+    const onSearchTextChanged = (e) => {
+        setSearchText(e.target.value)
+    }
+
+    const filteredRobots = robots.filter((robot) => robot.name.toLowerCase().includes(searchText));
+
+    return (
+        <div className="tc">
+            <h1>Robot company</h1>
+            <Search value={searchText} onTextChange={onSearchTextChanged}></Search>
+            <CardList dataSource={filteredRobots}></CardList>
+        </div>
+    )
 }
 
 export default App;
